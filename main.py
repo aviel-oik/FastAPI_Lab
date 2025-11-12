@@ -25,13 +25,13 @@ def read_root():
 def read_all():
     return load_dada()
 
-@app.put("/change_price/{item_id}", response_model=Item)
-def change_price(item_id, item : Item):
+@app.put("/change_price/{item_id}")
+def change_price(item_id, new_price):
     data = load_dada()
-    for i in data:
-        if i["id"] == item_id:
-            i["price"] = item["price"]
+    for item in data:
+        if item["id"] == item_id:
+            item["price"] = new_price
             save_data(data)
-            return i
+            return item
     raise HTTPException(status_code=404, detail="Item not found")
 
